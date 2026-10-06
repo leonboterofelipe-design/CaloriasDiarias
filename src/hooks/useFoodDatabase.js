@@ -85,7 +85,17 @@ export function useFoodDatabase() {
     setCustomFoods((prev) => prev.filter((f) => f.id !== id));
   }, []);
 
-  const foods = useMemo(() => [...baseFoods, ...customFoods], [customFoods]);
+  const foods = useMemo(() => {
+    const seen = new Set();
+    const withId = baseFoods.map((f) => {
+      let id = slugify(f.name);
+      let n = 2;
+      while (seen.has(id)) id = `${slugify(f.name)}-${n++}`;
+      seen.add(id);
+      return { ...f, id };
+    });
+    return [...withId, ...customFoods];
+  }, [customFoods]);
 
   return { foods, customFoods, addCustomFood, removeCustomFood };
 }

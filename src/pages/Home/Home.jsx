@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { useDiet } from '../../context/DietContext';
 import { useCalorieProgress } from '../../hooks/useCalorieProgress';
-import { CATEGORIES } from '../../utils/categories';
+import { getCategoryOptions } from '../../utils/categories';
 import CalorieChart from '../../components/CalorieChart/CalorieChart';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import MealSection from '../../components/MealSection/MealSection';
 import AddFoodForm from '../../components/AddFoodForm/AddFoodForm';
+import MealDialog from '../../components/MealDialog/MealDialog';
 import styles from './Home.module.css';
 import { formatCalories } from '../../utils/calories';
+
+const CATEGORY_OPTIONS = getCategoryOptions();
 
 export default function Home() {
   const {
@@ -24,6 +27,7 @@ export default function Home() {
   } = useDiet();
   const { consumed, status, totalItems } = useCalorieProgress(meals, calorieGoal);
   const [showFoodForm, setShowFoodForm] = useState(false);
+  const [showAiDialog, setShowAiDialog] = useState(false);
   const [goalInput, setGoalInput] = useState(String(calorieGoal));
 
   const commitGoal = () => {
@@ -66,6 +70,13 @@ export default function Home() {
         <div className={styles.headerActions}>
           <button
             type="button"
+            className={styles.aiBtn}
+            onClick={() => setShowAiDialog(true)}
+          >
+            ✨ Registrar con IA
+          </button>
+          <button
+            type="button"
             className={styles.addFoodBtn}
             onClick={() => setShowFoodForm((v) => !v)}
             aria-expanded={showFoodForm}
@@ -96,11 +107,21 @@ export default function Home() {
             Quedará disponible en la búsqueda de todas las comidas.
           </p>
           <AddFoodForm
-            categories={CATEGORIES}
+            categoryOptions={CATEGORY_OPTIONS}
             onSubmit={addCustomFood}
             onCancel={() => setShowFoodForm(false)}
           />
         </section>
+      )}
+
+      {showAiDialog && (
+        <MealDialog
+          foods={foods}
+          categoryOptions={CATEGORY_OPTIONS}
+          onAddItem={addItem}
+          onAddCustomFood={addCustomFood}
+          onClose={() => setShowAiDialog(false)}
+        />
       )}
 
       <main className={styles.main}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import styles from './AddFoodForm.module.css';
 
 const EMPTY = {
@@ -16,7 +16,7 @@ function validate(fields) {
   const errors = {};
 
   if (!fields.name.trim()) errors.name = 'El nombre es obligatorio.';
-  if (!fields.category) errors.category = 'Selecciona una categoría.';
+  if (!fields.category.trim()) errors.category = 'Elige o escribe una categoría.';
 
   const portion = Number(fields.portion_g);
   if (fields.portion_g === '' || !Number.isFinite(portion) || portion <= 0) {
@@ -38,10 +38,11 @@ function validate(fields) {
   return errors;
 }
 
-export default function AddFoodForm({ categories = [], onSubmit, onCancel }) {
+export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }) {
   const [fields, setFields] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState('');
+  const categoryListId = useId();
 
   const setField = (key, value) => {
     setFields((prev) => ({ ...prev, [key]: value }));
@@ -92,20 +93,21 @@ export default function AddFoodForm({ categories = [], onSubmit, onCancel }) {
           <span className={styles.label}>
             Categoría <span className={styles.required} aria-hidden="true">*</span>
           </span>
-          <select
+          <input
             className={styles.input}
+            type="text"
+            list={categoryListId}
             value={fields.category}
             onChange={(e) => setField('category', e.target.value)}
+            placeholder="Elige o escribe una categoría"
             required
             aria-invalid={!!errors.category}
-          >
-            <option value="">Selecciona…</option>
-            {categories.map((c) => (
-              <option key={c.name} value={c.name}>
-                {c.name}
-              </option>
+          />
+          <datalist id={categoryListId}>
+            {categoryOptions.map((name) => (
+              <option key={name} value={name} />
             ))}
-          </select>
+          </datalist>
           {errors.category && <span className={styles.error}>{errors.category}</span>}
         </label>
 
