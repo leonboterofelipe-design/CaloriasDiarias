@@ -1,0 +1,12 @@
+[
+  { "name": "Proteína", "color": "#FF9AA2", "description": "Carnes, pescados, huevo, embutidos" },
+  { "name": "Carbohidrato", "color": "#FFD6A5", "description": "Cereales, tubérculos, plátano, pan, arepa" },
+  { "name": "Leguminosa", "color": "#CDB4DB", "description": "Lentejas, fríjol, garbanzos" },
+  { "name": "Verdura", "color": "#B5EAD7", "description": "Hortalizas y verduras (~100 g por porción)" },
+  { "name": "Fruta", "color": "#FFDAC1", "description": "Frutas frescas" },
+  { "name": "Lácteo", "color": "#BDE0FE", "description": "Leche, yogurt y quesos" },
+  { "name": "Aceite / Grasa", "color": "#FDFFB6", "description": "Aceites, mantequilla, aguacate, frutos secos" },
+  { "name": "Bebida", "color": "#A2D2FF", "description": "Bebidas con aporte calórico" },
+  { "name": "Otros", "color": "#E2E2E2", "description": "Dulces, fritos y misceláneos" },
+  { "name": "Comida callejera", "color": "#F4A261", "description": "Perros, hamburguesas, pizzas, fritos y comidas rápidas" }
+]

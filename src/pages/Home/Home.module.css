@@ -1,0 +1,314 @@
+.page {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 36px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  line-height: 1;
+}
+
+.title {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  color: var(--text-muted);
+  text-transform: capitalize;
+}
+
+.resetBtn {
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--danger);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--glass-border-soft);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.resetBtn:hover {
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: clamp(18px, 3vw, 32px);
+}
+
+.chartWrap {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.summaryInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.summaryStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--glass-border-soft);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.statValue {
+  font-size: clamp(1.05rem, 3vw, 1.4rem);
+  font-weight: 800;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.statusChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: center;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+.statusDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mealsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mealsHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mealsTitle {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+}
+
+.mealsCount {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.mealsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.footer {
+  text-align: center;
+  padding: 8px 0 16px;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Tablet */
+@media (min-width: 720px) {
+  .summary {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .chartWrap {
+    width: 220px;
+  }
+
+  .summaryInfo {
+    flex: 1;
+  }
+
+  .mealsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  .chartWrap {
+    width: 260px;
+  }
+
+  .mealsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.addFoodBtn {
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.addFoodBtn:hover {
+  transform: translateY(-1px);
+  opacity: 0.94;
+}
+
+.addFoodBtn:active {
+  transform: translateY(0);
+}
+
+.addFoodCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(16px, 3vw, 24px);
+}
+
+.addFoodHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.addFoodTitle {
+  font-size: 1.15rem;
+}
+
+.addFoodClose {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(120, 130, 160, 0.16);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.addFoodClose:hover {
+  background: rgba(120, 130, 160, 0.3);
+}
+
+.addFoodHint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.goalField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.goalLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.goalInputWrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.goalInput {
+  width: 96px;
+  padding: 8px 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-strong);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+}
+
+.goalInput:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.goalUnit {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}

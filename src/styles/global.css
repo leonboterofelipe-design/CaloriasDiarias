@@ -1,0 +1,87 @@
+:root {
+  --font-sans: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+
+  --text-strong: #2b2d42;
+  --text-muted: #69718a;
+  --text-faint: #8a91a8;
+
+  --accent: #7c6cf0;
+  --accent-2: #6fb6f0;
+  --accent-soft: rgba(124, 108, 240, 0.14);
+
+  --glass-bg: rgba(255, 255, 255, 0.44);
+  --glass-bg-strong: rgba(255, 255, 255, 0.66);
+  --glass-border: rgba(255, 255, 255, 0.62);
+  --glass-border-soft: rgba(255, 255, 255, 0.42);
+  --glass-shadow: 0 10px 34px rgba(88, 96, 150, 0.18);
+  --glass-shadow-sm: 0 4px 16px rgba(88, 96, 150, 0.12);
+
+  --radius-xl: 26px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --blur: blur(18px) saturate(160%);
+
+  --danger: #e74c3c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--text-strong);
+  line-height: 1.5;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(124, 108, 240, 0.22), transparent 38%),
+    radial-gradient(circle at 88% 12%, rgba(111, 182, 240, 0.26), transparent 42%),
+    radial-gradient(circle at 18% 88%, rgba(245, 166, 245, 0.22), transparent 42%),
+    radial-gradient(circle at 82% 92%, rgba(140, 235, 214, 0.24), transparent 44%),
+    linear-gradient(160deg, #eef1fb 0%, #e5edf9 50%, #f3ecfa 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Utilidad global para el efecto "vidrio esmerilado". */
+.glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--glass-shadow);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(124, 108, 240, 0.5);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
