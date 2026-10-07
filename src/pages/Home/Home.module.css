@@ -2,7 +2,10 @@
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: clamp(16px, 3vw, 40px);
+  padding:
+    calc(clamp(16px, 3vw, 40px) + env(safe-area-inset-top, 0px))
+    clamp(16px, 3vw, 40px)
+    calc(clamp(16px, 3vw, 40px) + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 3vw, 36px);
@@ -50,8 +53,10 @@
   transition: background 0.15s ease;
 }
 
-.resetBtn:hover {
-  background: rgba(231, 76, 60, 0.1);
+@media (hover: hover) and (pointer: fine) {
+  .resetBtn:hover {
+    background: rgba(231, 76, 60, 0.1);
+  }
 }
 
 .main {
@@ -102,6 +107,7 @@
 .statValue {
   font-size: clamp(1.05rem, 3vw, 1.4rem);
   font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
 .statLabel {
@@ -213,16 +219,18 @@
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: transform 0.12s ease, opacity 0.12s ease;
+  transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
 }
 
-.addFoodBtn:hover {
-  transform: translateY(-1px);
-  opacity: 0.94;
+@media (hover: hover) and (pointer: fine) {
+  .addFoodBtn:hover {
+    transform: translateY(-1px);
+    opacity: 0.94;
+  }
 }
 
 .addFoodBtn:active {
-  transform: translateY(0);
+  transform: scale(0.97);
 }
 
 .aiBtn {
@@ -234,16 +242,18 @@
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: transform 0.12s ease, opacity 0.12s ease;
+  transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
 }
 
-.aiBtn:hover {
-  transform: translateY(-1px);
-  opacity: 0.94;
+@media (hover: hover) and (pointer: fine) {
+  .aiBtn:hover {
+    transform: translateY(-1px);
+    opacity: 0.94;
+  }
 }
 
 .aiBtn:active {
-  transform: translateY(0);
+  transform: scale(0.97);
 }
 
 .addFoodCard {
@@ -265,6 +275,7 @@
 }
 
 .addFoodClose {
+  position: relative;
   width: 30px;
   height: 30px;
   display: inline-flex;
@@ -280,8 +291,17 @@
   transition: background 0.15s ease;
 }
 
-.addFoodClose:hover {
-  background: rgba(120, 130, 160, 0.3);
+/* Área táctil ≥44px sin agrandar el botón visual. */
+.addFoodClose::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .addFoodClose:hover {
+    background: rgba(120, 130, 160, 0.3);
+  }
 }
 
 .addFoodHint {
@@ -325,7 +345,7 @@
 .goalInput:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  box-shadow: var(--focus-ring);
 }
 
 .goalUnit {

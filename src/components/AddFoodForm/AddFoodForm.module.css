@@ -44,7 +44,7 @@
 .input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  box-shadow: var(--focus-ring);
 }
 
 .input[aria-invalid='true'] {
@@ -86,8 +86,10 @@
   transition: background 0.15s ease;
 }
 
-.cancel:hover {
-  background: rgba(255, 255, 255, 0.85);
+@media (hover: hover) and (pointer: fine) {
+  .cancel:hover {
+    background: rgba(255, 255, 255, 0.85);
+  }
 }
 
 .submit {
@@ -99,16 +101,18 @@
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: transform 0.12s ease, opacity 0.12s ease;
+  transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
 }
 
-.submit:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
+@media (hover: hover) and (pointer: fine) {
+  .submit:hover {
+    transform: translateY(-1px);
+    opacity: 0.95;
+  }
 }
 
 .submit:active {
-  transform: translateY(0);
+  transform: scale(0.97);
 }
 
 @media (min-width: 640px) {

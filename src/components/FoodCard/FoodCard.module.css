@@ -54,14 +54,16 @@
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: transform 0.12s ease, opacity 0.12s ease;
+  transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
 }
 
-.addBtn:hover {
-  transform: translateY(-1px);
-  opacity: 0.92;
+@media (hover: hover) and (pointer: fine) {
+  .addBtn:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+  }
 }
 
 .addBtn:active {
-  transform: translateY(0);
+  transform: scale(0.97);
 }

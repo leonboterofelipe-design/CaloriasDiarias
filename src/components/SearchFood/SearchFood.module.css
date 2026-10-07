@@ -42,7 +42,7 @@
 .input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  box-shadow: var(--focus-ring);
 }
 
 .clear {
@@ -63,8 +63,17 @@
   transition: background 0.15s ease;
 }
 
-.clear:hover {
-  background: rgba(120, 130, 160, 0.3);
+/* Área táctil ≥44px sin agrandar el botón visual. */
+.clear::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .clear:hover {
+    background: rgba(120, 130, 160, 0.3);
+  }
 }
 
 .results {

@@ -15,7 +15,7 @@ export default function ProgressBar({ percent = 0, color = '#34c98e', max = 2000
       <div className={styles.track}>
         <div
           className={styles.fill}
-          style={{ width: `${clamped}%`, backgroundColor: color }}
+          style={{ transform: `scaleX(${clamped / 100})`, backgroundColor: color }}
         />
       </div>
       <div className={styles.labels}>

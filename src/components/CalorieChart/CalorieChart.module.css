@@ -21,7 +21,7 @@
 .progress {
   fill: none;
   stroke-width: 16;
-  transition: stroke-dashoffset 0.6s ease, stroke 0.3s ease;
+  transition: stroke-dashoffset 0.5s var(--ease-out), stroke 0.3s ease;
 }
 
 .center {

@@ -107,6 +107,7 @@
 }
 
 .removeBtn {
+  position: relative;
   width: 28px;
   height: 28px;
   display: inline-flex;
@@ -122,8 +123,17 @@
   transition: background 0.15s ease;
 }
 
-.removeBtn:hover {
-  background: rgba(231, 76, 60, 0.24);
+/* Área táctil ≥44px sin agrandar el botón visual. */
+.removeBtn::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .removeBtn:hover {
+    background: rgba(231, 76, 60, 0.24);
+  }
 }
 
 .placeholder {
@@ -153,11 +163,17 @@
   border: 1px solid rgba(124, 108, 240, 0.25);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 150ms ease, transform 120ms var(--ease-out);
 }
 
-.addToggle:hover {
-  background: rgba(124, 108, 240, 0.2);
+@media (hover: hover) and (pointer: fine) {
+  .addToggle:hover {
+    background: rgba(124, 108, 240, 0.2);
+  }
+}
+
+.addToggle:active {
+  transform: scale(0.97);
 }
 
 .clearBtn {
@@ -172,8 +188,10 @@
   transition: background 0.15s ease;
 }
 
-.clearBtn:hover {
-  background: rgba(255, 255, 255, 0.82);
+@media (hover: hover) and (pointer: fine) {
+  .clearBtn:hover {
+    background: rgba(255, 255, 255, 0.82);
+  }
 }
 
 .addArea {
@@ -275,7 +293,7 @@
 .qtyInput:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  box-shadow: var(--focus-ring);
 }
 
 .preview {
@@ -302,8 +320,10 @@
   transition: background 0.15s ease;
 }
 
-.cancel:hover {
-  background: rgba(255, 255, 255, 0.85);
+@media (hover: hover) and (pointer: fine) {
+  .cancel:hover {
+    background: rgba(255, 255, 255, 0.85);
+  }
 }
 
 .confirm {
@@ -315,11 +335,17 @@
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: transform 0.12s ease, opacity 0.12s ease;
+  transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
 }
 
-.confirm:hover:not(:disabled) {
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .confirm:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+}
+
+.confirm:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .confirm:disabled {

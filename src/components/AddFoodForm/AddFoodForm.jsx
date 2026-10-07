@@ -43,6 +43,7 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState('');
   const categoryListId = useId();
+  const errorId = useId();
 
   const setField = (key, value) => {
     setFields((prev) => ({ ...prev, [key]: value }));
@@ -85,8 +86,13 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
             placeholder="Ej. Pechuga de pollo"
             required
             aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? `${errorId}-name` : undefined}
           />
-          {errors.name && <span className={styles.error}>{errors.name}</span>}
+          {errors.name && (
+            <span id={`${errorId}-name`} className={styles.error} role="alert">
+              {errors.name}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
@@ -102,13 +108,18 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
             placeholder="Elige o escribe una categoría"
             required
             aria-invalid={!!errors.category}
+            aria-describedby={errors.category ? `${errorId}-category` : undefined}
           />
           <datalist id={categoryListId}>
             {categoryOptions.map((name) => (
               <option key={name} value={name} />
             ))}
           </datalist>
-          {errors.category && <span className={styles.error}>{errors.category}</span>}
+          {errors.category && (
+            <span id={`${errorId}-category`} className={styles.error} role="alert">
+              {errors.category}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
@@ -127,8 +138,13 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
             placeholder="Ej. 100"
             required
             aria-invalid={!!errors.portion_g}
+            aria-describedby={errors.portion_g ? `${errorId}-portion_g` : undefined}
           />
-          {errors.portion_g && <span className={styles.error}>{errors.portion_g}</span>}
+          {errors.portion_g && (
+            <span id={`${errorId}-portion_g`} className={styles.error} role="alert">
+              {errors.portion_g}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
@@ -147,9 +163,14 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
             placeholder="Ej. 165"
             required
             aria-invalid={!!errors.calories_per_portion}
+            aria-describedby={
+              errors.calories_per_portion ? `${errorId}-calories_per_portion` : undefined
+            }
           />
           {errors.calories_per_portion && (
-            <span className={styles.error}>{errors.calories_per_portion}</span>
+            <span id={`${errorId}-calories_per_portion`} className={styles.error} role="alert">
+              {errors.calories_per_portion}
+            </span>
           )}
         </label>
 
@@ -175,8 +196,14 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
             value={fields.protein_g}
             onChange={(e) => setField('protein_g', e.target.value)}
             placeholder="Opcional"
+            aria-invalid={!!errors.protein_g}
+            aria-describedby={errors.protein_g ? `${errorId}-protein_g` : undefined}
           />
-          {errors.protein_g && <span className={styles.error}>{errors.protein_g}</span>}
+          {errors.protein_g && (
+            <span id={`${errorId}-protein_g`} className={styles.error} role="alert">
+              {errors.protein_g}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
@@ -190,8 +217,14 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
             value={fields.carbs_g}
             onChange={(e) => setField('carbs_g', e.target.value)}
             placeholder="Opcional"
+            aria-invalid={!!errors.carbs_g}
+            aria-describedby={errors.carbs_g ? `${errorId}-carbs_g` : undefined}
           />
-          {errors.carbs_g && <span className={styles.error}>{errors.carbs_g}</span>}
+          {errors.carbs_g && (
+            <span id={`${errorId}-carbs_g`} className={styles.error} role="alert">
+              {errors.carbs_g}
+            </span>
+          )}
         </label>
 
         <label className={styles.field}>
@@ -205,8 +238,14 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
             value={fields.fat_g}
             onChange={(e) => setField('fat_g', e.target.value)}
             placeholder="Opcional"
+            aria-invalid={!!errors.fat_g}
+            aria-describedby={errors.fat_g ? `${errorId}-fat_g` : undefined}
           />
-          {errors.fat_g && <span className={styles.error}>{errors.fat_g}</span>}
+          {errors.fat_g && (
+            <span id={`${errorId}-fat_g`} className={styles.error} role="alert">
+              {errors.fat_g}
+            </span>
+          )}
         </label>
       </div>
 

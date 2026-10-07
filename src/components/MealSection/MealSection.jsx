@@ -54,7 +54,9 @@ export default function MealSection({ meal, foods, onAddItem, onRemoveItem, onCl
           {meal.items.map((item) => (
             <li key={item.id} className={styles.item}>
               <div className={styles.itemInfo}>
-                <span className={styles.itemName}>{item.name}</span>
+                <span className={styles.itemName} title={item.name}>
+                  {item.name}
+                </span>
                 <span className={styles.itemMeta}>
                   {item.qtyType === 'portion'
                     ? `${item.qty} porción${item.qty !== 1 ? 'es' : ''} · ${Math.round(item.grams)} g`

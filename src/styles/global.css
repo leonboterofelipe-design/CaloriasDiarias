@@ -24,6 +24,13 @@
   --blur: blur(18px) saturate(160%);
 
   --danger: #e74c3c;
+
+  /* Curvas de easing fuertes (animations.dev / emil-design-eng). */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Anillo de foco visible y de contraste suficiente. */
+  --focus-ring: 0 0 0 3px rgba(124, 108, 240, 0.6);
 }
 
 * {
@@ -32,11 +39,14 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   font-family: var(--font-sans);
   color: var(--text-strong);
   line-height: 1.5;
@@ -64,6 +74,22 @@ button {
   font-family: inherit;
 }
 
+/* Baseline móvil (mobile-native): elimina el flash de tap, evita el retardo
+   de 300 ms en controles y evita la selección de texto al mantener pulsado. */
+button,
+[role='button'] {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* iOS hace zoom sobre un input con fuente menor a 16px. */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
 /* Utilidad global para el efecto "vidrio esmerilado". */
 .glass {
   background: var(--glass-bg);
@@ -75,7 +101,7 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid rgba(124, 108, 240, 0.5);
+  outline: 3px solid rgba(124, 108, 240, 0.85);
   outline-offset: 2px;
 }
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './MealDialog.module.css';
 import { parseMealText } from '../../utils/mealParser';
 import { analyzeMealText } from '../../utils/mealAI';
@@ -17,7 +17,9 @@ function MatchedRow({ item, index, updateItem, removeItem }) {
         ✓
       </span>
       <div className={styles.itemInfo}>
-        <span className={styles.itemName}>{item.food.name}</span>
+        <span className={styles.itemName} title={item.food.name}>
+          {item.food.name}
+        </span>
         <span className={styles.itemMeta}>
           {formatCalories(item.food.calories_per_portion)} kcal/porción
         </span>
@@ -137,6 +139,49 @@ export default function MealDialog({
   const [added, setAdded] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const modalRef = useRef(null);
+  const closeBtnRef = useRef(null);
+
+  // A11y del diálogo: mueve el foco al abrir, permite cerrar con Escape y
+  // mantiene el foco dentro del modal (focus trap). Al desmontar restaura el foco.
+  useEffect(() => {
+    const modal = modalRef.current;
+    const previouslyFocused = document.activeElement;
+    (closeBtnRef.current || modal)?.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !modal) return;
+
+      const focusable = modal.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+        previouslyFocused.focus();
+      }
+    };
+  }, [onClose]);
+
   const handleAnalyze = async () => {
     const t = text.trim();
     if (!t) return;
@@ -231,11 +276,13 @@ export default function MealDialog({
   return (
     <div className={styles.overlay} onClick={onClose} role="presentation">
       <div
+        ref={modalRef}
         className={styles.modal}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label="Registrar comida con IA"
+        tabIndex={-1}
       >
         <header className={styles.header}>
           <div>
@@ -244,7 +291,13 @@ export default function MealDialog({
               Describe lo que comiste y se asignará a la comida correspondiente.
             </p>
           </div>
-          <button type="button" className={styles.close} onClick={onClose} aria-label="Cerrar">
+          <button
+            ref={closeBtnRef}
+            type="button"
+            className={styles.close}
+            onClick={onClose}
+            aria-label="Cerrar"
+          >
             ×
           </button>
         </header>
