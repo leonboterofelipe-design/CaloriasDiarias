@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import styles from './AddFoodForm.module.css';
+import { validateFoodFields } from '../../utils/validateFood';
 
 const EMPTY = {
   name: '',
@@ -11,32 +12,6 @@ const EMPTY = {
   carbs_g: '',
   fat_g: '',
 };
-
-function validate(fields) {
-  const errors = {};
-
-  if (!fields.name.trim()) errors.name = 'El nombre es obligatorio.';
-  if (!fields.category.trim()) errors.category = 'Elige o escribe una categoría.';
-
-  const portion = Number(fields.portion_g);
-  if (fields.portion_g === '' || !Number.isFinite(portion) || portion <= 0) {
-    errors.portion_g = 'Indica una porción en gramos mayor a 0.';
-  }
-
-  const calories = Number(fields.calories_per_portion);
-  if (fields.calories_per_portion === '' || !Number.isFinite(calories) || calories < 0) {
-    errors.calories_per_portion = 'Indica las calorías de la porción (0 o más).';
-  }
-
-  ['protein_g', 'carbs_g', 'fat_g'].forEach((key) => {
-    const value = fields[key];
-    if (value !== '' && (!Number.isFinite(Number(value)) || Number(value) < 0)) {
-      errors[key] = 'Debe ser un número válido (0 o más).';
-    }
-  });
-
-  return errors;
-}
 
 export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }) {
   const [fields, setFields] = useState(EMPTY);
@@ -57,7 +32,7 @@ export default function AddFoodForm({ categoryOptions = [], onSubmit, onCancel }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const errs = validate(fields);
+    const errs = validateFoodFields(fields);
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 

@@ -99,3 +99,41 @@ Resumen de las modificaciones aplicadas sobre `diet-app` siguiendo los estándar
 `npm run build` **confirmado por el Lead**: compila sin errores (`✓ 59 modules transformed`,
 ~8 s). El agente no pudo ejecutarlo por la restricción de sandbox (`spawn EPERM` de esbuild),
 pero como alternativa validó la sintaxis de todos los JS/JSX (`@babel/parser`) y CSS (`postcss`).
+
+---
+
+## Recomendaciones aplicadas (2ª pasada)
+
+### 1. Confirmación antes de "Reiniciar día"
+- **`src/pages/Home/Home.jsx`** — Nuevo handler `handleResetDay` que pide confirmación con
+  `window.confirm('¿Reiniciar el día? Se borrarán todos los alimentos registrados de hoy.')`
+  antes de llamar a `resetDay()`. El botón ahora usa `onClick={handleResetDay}`.
+  Evita la pérdida accidental de los datos del día.
+
+### 2. Token `--btn-gradient` (deduplicar botón primario)
+- **`src/styles/global.css`** — Nuevo token
+  `--btn-gradient: linear-gradient(135deg, var(--accent), var(--accent-2))`.
+- Referenciado (antes repetido literalmente) en 5 módulos CSS:
+  - `Home.module.css` (`.addFoodBtn`)
+  - `MealSection.module.css` (`.confirm`)
+  - `FoodCard.module.css` (`.addBtn`)
+  - `AddFoodForm.module.css` (`.submit`)
+  - `MealDialog.module.css` (`.primary`)
+- Apariencia idéntica. `.aiBtn` conserva su propio gradiente (colores distintos, no es el primario).
+
+### 3. Validación unificada (`validateFoodFields`)
+- **Nuevo `src/utils/validateFood.js`** — `validateFoodFields(fields)` es ahora la única fuente
+  de verdad de validación: nombre, categoría, porción y calorías (más macros opcionales),
+  devolviendo errores indexados por campo y tolerando valores `string` (formulario) y
+  `number` (parser de IA).
+- **`AddFoodForm.jsx`** — Eliminada la `validate` local; usa `validateFoodFields`.
+- **`useFoodDatabase.js`** — `addCustomFood` valida con `validateFoodFields` (misma lógica de
+  decisión; el mensaje de categoría se unificó a "Elige o escribe una categoría.").
+- **`MealDialog.jsx`** — `handleAddAll` valida cada ítem `new` con `validateFoodFields` y toma
+  el primer error por fila. El copy de error del diálogo IA ahora es consistente con el del
+  formulario (ligeramente más descriptivo); la lógica de aceptación/rechazo es idéntica.
+
+### Verificación (2ª pasada)
+`npm run build` vuelve a fallar en el sandbox (`spawn EPERM` de esbuild, restricción de named
+pipes) — no es el código. Se validó la sintaxis de todos los JS/JSX con `@babel/parser` y de
+todos los CSS con `postcss`: **todo parsea sin errores** (incluido el nuevo `validateFood.js`).

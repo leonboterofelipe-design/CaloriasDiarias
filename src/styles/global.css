@@ -9,6 +9,9 @@
   --accent-2: #6fb6f0;
   --accent-soft: rgba(124, 108, 240, 0.14);
 
+  /* Gradiente del botón primario (referenciado por los módulos CSS). */
+  --btn-gradient: linear-gradient(135deg, var(--accent), var(--accent-2));
+
   --glass-bg: rgba(255, 255, 255, 0.44);
   --glass-bg-strong: rgba(255, 255, 255, 0.66);
   --glass-border: rgba(255, 255, 255, 0.62);

@@ -48,6 +48,16 @@ export default function Home() {
     }
   };
 
+  const handleResetDay = () => {
+    if (
+      window.confirm(
+        '¿Reiniciar el día? Se borrarán todos los alimentos registrados de hoy.'
+      )
+    ) {
+      resetDay();
+    }
+  };
+
   const dateLabel = new Intl.DateTimeFormat('es-CO', {
     weekday: 'long',
     day: 'numeric',
@@ -83,7 +93,7 @@ export default function Home() {
           >
             {showFoodForm ? 'Cerrar' : '+ Nuevo alimento'}
           </button>
-          <button type="button" className={styles.resetBtn} onClick={resetDay}>
+          <button type="button" className={styles.resetBtn} onClick={handleResetDay}>
             Reiniciar día
           </button>
         </div>

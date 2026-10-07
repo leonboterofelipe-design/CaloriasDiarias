@@ -5,6 +5,7 @@ import { analyzeMealText } from '../../utils/mealAI';
 import { MEAL_DEFS } from '../../hooks/useDietTracker';
 import { formatCalories } from '../../utils/calories';
 import { getCategoryColor } from '../../utils/categories';
+import { validateFoodFields } from '../../utils/validateFood';
 
 function MatchedRow({ item, index, updateItem, removeItem }) {
   return (
@@ -227,16 +228,9 @@ export default function MealDialog({
     const errs = {};
     result.items.forEach((it, i) => {
       if (it.kind !== 'new') return;
-      if (!it.name.trim()) errs[i] = 'Indica el nombre.';
-      else if (!it.category.trim()) errs[i] = 'Elige una categoría.';
-      else if (!Number.isFinite(Number(it.portion_g)) || Number(it.portion_g) <= 0)
-        errs[i] = 'Porción inválida.';
-      else if (
-        it.calories_per_portion === '' ||
-        !Number.isFinite(Number(it.calories_per_portion)) ||
-        Number(it.calories_per_portion) < 0
-      )
-        errs[i] = 'Indica las calorías.';
+      const fieldErrors = validateFoodFields(it);
+      const firstField = Object.keys(fieldErrors)[0];
+      if (firstField) errs[i] = fieldErrors[firstField];
     });
 
     if (Object.keys(errs).length > 0) {

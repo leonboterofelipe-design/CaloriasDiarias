@@ -215,7 +215,7 @@
   font-size: 0.88rem;
   font-weight: 700;
   color: #fff;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background: var(--btn-gradient);
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;

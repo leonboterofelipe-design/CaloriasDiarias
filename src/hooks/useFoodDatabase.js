@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import baseFoods from '../data/foodDatabase.json';
+import { validateFoodFields } from '../utils/validateFood';
 
 const STORAGE_KEY = 'diet-tracker-custom-foods';
 
@@ -43,24 +44,16 @@ export function useFoodDatabase() {
   }, [customFoods]);
 
   const addCustomFood = useCallback((fields) => {
-    const name = String(fields?.name ?? '').trim();
-    const category = String(fields?.category ?? '').trim();
-    const portion_g = Number(fields?.portion_g);
-    const calories_per_portion = Number(fields?.calories_per_portion);
-
-    const errors = {};
-    if (!name) errors.name = 'El nombre es obligatorio.';
-    if (!category) errors.category = 'Selecciona una categoría.';
-    if (!Number.isFinite(portion_g) || portion_g <= 0) {
-      errors.portion_g = 'Indica una porción en gramos mayor a 0.';
-    }
-    if (!Number.isFinite(calories_per_portion) || calories_per_portion < 0) {
-      errors.calories_per_portion = 'Indica las calorías de la porción (0 o más).';
-    }
+    const errors = validateFoodFields(fields);
 
     if (Object.keys(errors).length > 0) {
       return { ok: false, errors };
     }
+
+    const name = String(fields?.name ?? '').trim();
+    const category = String(fields?.category ?? '').trim();
+    const portion_g = Number(fields?.portion_g);
+    const calories_per_portion = Number(fields?.calories_per_portion);
 
     const num = (v) => (v === '' || v === null || v === undefined ? null : Number(v) || 0);
 
